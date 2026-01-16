@@ -2,64 +2,99 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Add Notes</title>
 
 <style>
-/* 🔴 YOUR CSS – NOT CHANGED */
-body{
-  background: url(pexels-mastercowley-1128797.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  min-height: 100vh;
+*{
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 
+body{
+  margin: 0;
+  min-height: 100vh;
+  background: url(pexels-mastercowley-1128797.jpg) center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+/* ✅ Responsive container */
 .container{
-  width: 500px;
-  height: auto;
-  border-radius: 10px;
-  position: relative;
-  left: 35%;
-  top: 220px;
-  transition: 0.5s ease;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 12px;
   background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  box-shadow: 10px 10px 20px 5px pink;
+  box-shadow: 0 10px 30px pink;
+  transition: 0.4s ease;
 }
 
-.container:hover{ transform: scale(1.01); }
+.container:hover{
+  transform: scale(1.02);
+}
+
+.container h1{
+  text-align: center;
+  color: lightpink;
+  margin-top: 20px;
+  filter: drop-shadow(0 0 10px pink);
+}
 
 .container form{
   padding: 25px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
-input,textarea{
-  border-radius: 7px;
-  height: 30px;
-  box-shadow: 10px 10px 20px 5px pink;
-  outline: none;
+input, textarea{
+  width: 100%;
+  border-radius: 8px;
+  padding: 8px 12px;
   border: 2px solid pink;
+  outline: none;
+  box-shadow: 0 5px 15px pink;
+  font-size: 15px;
 }
 
-textarea{ height: 60px; }
+textarea{
+  min-height: 80px;
+  resize: none;
+}
+
+input[type="file"]{
+  background: white;
+}
 
 input[type="button"]{
-  width: 60%;
-  margin: auto;
+  width: 100%;
   cursor: pointer;
-  transition: 0.5s ease;
+  background: white;
+  font-weight: bold;
+  transition: 0.3s ease;
 }
 
-input[type="button"]:hover{ transform: scale(1.1); }
+input[type="button"]:hover{
+  transform: scale(1.05);
+}
 
-.container h1{
-  text-align: center;
-  color: lightpink;
-  filter: drop-shadow(10px 10px 20px pink);
+/* 📱 Mobile specific tweaks */
+@media (max-width: 600px){
+  .container{
+    padding-bottom: 10px;
+  }
+
+  .container h1{
+    font-size: 22px;
+  }
+
+  input, textarea{
+    font-size: 14px;
+  }
 }
 </style>
 </head>
@@ -85,7 +120,7 @@ function saveNote(){
   const note  = document.getElementById("note").value.trim();
   const file  = document.getElementById("file").files[0];
 
-  if(title==="" || note===""){
+  if(title === "" || note === ""){
     alert("Fill all fields");
     return;
   }
@@ -93,16 +128,18 @@ function saveNote(){
   const reader = new FileReader();
   reader.onload = function(){
     const data = JSON.parse(localStorage.getItem("notes")) || [];
+
     data.push({
       title,
       note,
       image: file ? reader.result : null
     });
+
     localStorage.setItem("notes", JSON.stringify(data));
 
-    document.getElementById("title").value="";
-    document.getElementById("note").value="";
-    document.getElementById("file").value="";
+    document.getElementById("title").value = "";
+    document.getElementById("note").value = "";
+    document.getElementById("file").value = "";
 
     alert("Saved successfully");
   };

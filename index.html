@@ -1,105 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registeration Page</title>
-    <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration Page</title>
 
-        body{
-            background: url(pexels-mastercowley-1128797.jpg);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            min-height: 100vh;
-        }
+  <style>
+    *{
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
 
-        .container{
-            width: 500px;
-            height: 252px;
-            position: relative;
-            border-radius: 10px;
-            position: relative;
-            left: 35%;
-            top: 250px;
-            transition: 0.5s ease;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 10px 10px 20px 5px pink;
-        }
-        .container:hover{
-            transform: scale(1.01);
-        }
-        .container form{
-            padding: 25px;
-            margin-left: 1%;
-            display: flex;
-            flex-direction: column;
-            width: 400px;
-            gap: 20px;
-            position: relative;
-            left: 5px;
-            align-content: center;
-        }
-        input{
-            border: none solid white;
-            border-radius: 7px;
-            height: 25px;
-            box-shadow: 10px 10px 20px 5px pink;
-            outline: none;
-            border: 2px solid pink;
-        }
-        input[type="button"]{
-            border: none solid white;
-            border-radius: 7px;
-            width: 50%;
-            position: relative;
-            left: 30px;
-            cursor: pointer;
-            transition: 0.5s ease;
-            box-shadow: 10px 10px 20px 5px pink;
-            border: 2px solid pink;
-        }
-        input[type="button"]:hover{
-            transform: scale(1.1);
-        }
-        .container h1{
-            position: relative;
-            text-align: center;
-            color: lightpink;
-            filter: drop-shadow(10px 10px 20px  pink);
-        }
-    </style>
+    body{
+      background: url(pexels-mastercowley-1128797.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+    }
+
+    .container{
+      width: 100%;
+      max-width: 500px;
+      border-radius: 10px;
+      transition: 0.5s ease;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 10px 10px 20px 5px pink;
+      padding: 20px;
+    }
+
+    .container:hover{
+      transform: scale(1.01);
+    }
+
+    .container h1{
+      text-align: center;
+      color: lightpink;
+      margin-bottom: 15px;
+      filter: drop-shadow(2px 2px 8px pink);
+    }
+
+    .container form{
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+    }
+
+    input{
+      height: 35px;
+      padding: 5px 10px;
+      border-radius: 7px;
+      outline: none;
+      border: 2px solid pink;
+      box-shadow: 5px 5px 15px pink;
+    }
+
+    input[type="button"]{
+      width: 60%;
+      align-self: center;
+      cursor: pointer;
+      transition: 0.5s ease;
+    }
+
+    input[type="button"]:hover{
+      transform: scale(1.1);
+    }
+
+    /* 🔥 Mobile specific */
+    @media (max-width: 600px){
+      h1{
+        font-size: 20px;
+      }
+
+      input{
+        font-size: 14px;
+      }
+
+      input[type="button"]{
+        width: 100%;
+      }
+    }
+  </style>
 </head>
+
 <body>
-    
-        <div class="container">
-            <h1>Register Form</h1>
-            <form action="">
-                <input type="text" id="name" placeholder="Enter your username..." >
-                <input type="password" id="pass" placeholder="Enter your password..." >
-                <input type="button" onclick="saves()" value="Register">
-            </form>
-        </div>
-    
-</body>
+
+  <div class="container">
+    <h1>Register Form</h1>
+    <form>
+      <input type="text" id="name" placeholder="Enter your username...">
+      <input type="password" id="pass" placeholder="Enter your password...">
+      <input type="button" onclick="saves()" value="Register">
+    </form>
+  </div>
+
 <script>
-    
-    const saves = ()=>{
-        const names = document.getElementById("name").value;
-        const pass = document.getElementById("pass").value;
-        if(names===""||pass===""){
-            alert("Fill all the fields");
-        }
-        else {
-            localStorage.setItem("username",names);
-            localStorage.setItem("password",pass);
-            alert("data stored successfully...!");
-            window.location.href = "login.html";
-        }
-    
-}
-    
+  const saves = () => {
+    const names = document.getElementById("name").value;
+    const pass = document.getElementById("pass").value;
+
+    if(names === "" || pass === ""){
+      alert("Fill all the fields");
+    } else {
+      localStorage.setItem("username", names);
+      localStorage.setItem("password", pass);
+      alert("Data stored successfully!");
+      window.location.href = "login.html";
+    }
+  }
 </script>
+
+</body>
 </html>
