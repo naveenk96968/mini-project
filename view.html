@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>View Notes</title>
+
+<style>
+body{
+  background: linear-gradient(to right,pink,skyblue);
+  min-height: 100vh;
+}
+
+.container{
+  width: 700px;
+  border-radius: 10px;
+  position: relative;
+  left: 25%;
+  top: 150px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  box-shadow: 10px 10px 20px 5px pink;
+  padding: 20px;
+}
+
+.container h1{
+  text-align: center;
+  color: lightpink;
+}
+
+#list{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.card{
+  background: rgba(255,255,255,0.9);
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.3);
+}
+
+.card img{
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.actions{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.actions button{
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid pink;
+  background: white;
+  padding: 3px 8px;
+}
+
+input[type="button"]{
+  margin-top: 15px;
+  width: 30%;
+  border-radius: 7px;
+  cursor: pointer;
+  border: 2px solid pink;
+  box-shadow: 5px 5px 15px pink;
+}
+
+/* FULL SCREEN IMAGE */
+.modal{
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal img{
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.modal span{
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 35px;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>My Saved Files</h1>
+  <div id="list"></div>
+  <input type="button" value="⬅ Back" onclick="goBack()">
+</div>
+
+<!-- FULL SCREEN IMAGE -->
+<div class="modal" id="imgModal">
+  <span onclick="closeImg()">✖</span>
+  <img id="fullImg">
+</div>
+
+<script>
+function loadNotes(){
+  const notes = JSON.parse(localStorage.getItem("notes")) || [];
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  if(notes.length === 0){
+    list.innerHTML = "<p>No files found</p>";
+    return;
+  }
+
+  notes.forEach((n,index)=>{
+    list.innerHTML += `
+      <div class="card">
+        <h3>${n.title}</h3>
+        <p>${n.note}</p>
+
+        ${n.image ? `<img src="${n.image}" onclick="openImg(this)">` : ""}
+
+        <div class="actions">
+          <button onclick="deleteNote(${index})">🗑 Delete</button>
+          ${n.image ? `<button onclick="downloadImg('${n.image}')">⬇ Download</button>` : ""}
+        </div>
+      </div>
+    `;
+  });
+}
+
+/* FULL IMAGE VIEW */
+function openImg(img){
+  document.getElementById("imgModal").style.display = "flex";
+  document.getElementById("fullImg").src = img.src;
+}
+
+function closeImg(){
+  document.getElementById("imgModal").style.display = "none";
+}
+
+/* DELETE NOTE */
+function deleteNote(index){
+  let notes = JSON.parse(localStorage.getItem("notes")) || [];
+  if(confirm("Delete this note?")){
+    notes.splice(index,1);
+    localStorage.setItem("notes", JSON.stringify(notes));
+    loadNotes();
+  }
+}
+
+/* DOWNLOAD IMAGE */
+function downloadImg(src){
+  const a = document.createElement("a");
+  a.href = src;
+  a.download = "note-image.png";
+  a.click();
+}
+
+function goBack(){
+  window.location.href = "notes.html";
+}
+
+loadNotes();
+</script>
+
+</body>
+</html>

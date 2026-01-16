@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Add Notes</title>
+
+<style>
+/* 🔴 YOUR CSS – NOT CHANGED */
+body{
+  background: url(pexels-mastercowley-1128797.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+}
+
+.container{
+  width: 500px;
+  height: auto;
+  border-radius: 10px;
+  position: relative;
+  left: 35%;
+  top: 220px;
+  transition: 0.5s ease;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 10px 10px 20px 5px pink;
+}
+
+.container:hover{ transform: scale(1.01); }
+
+.container form{
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+input,textarea{
+  border-radius: 7px;
+  height: 30px;
+  box-shadow: 10px 10px 20px 5px pink;
+  outline: none;
+  border: 2px solid pink;
+}
+
+textarea{ height: 60px; }
+
+input[type="button"]{
+  width: 60%;
+  margin: auto;
+  cursor: pointer;
+  transition: 0.5s ease;
+}
+
+input[type="button"]:hover{ transform: scale(1.1); }
+
+.container h1{
+  text-align: center;
+  color: lightpink;
+  filter: drop-shadow(10px 10px 20px pink);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Add Note</h1>
+
+  <form onsubmit="return false;">
+    <input type="text" id="title" placeholder="Title">
+    <textarea id="note" placeholder="Write note..."></textarea>
+    <input type="file" id="file" accept="image/*">
+
+    <input type="button" value="Save Note" onclick="saveNote()">
+    <input type="button" value="Show My Files" onclick="goView()">
+  </form>
+</div>
+
+<script>
+function saveNote(){
+  const title = document.getElementById("title").value.trim();
+  const note  = document.getElementById("note").value.trim();
+  const file  = document.getElementById("file").files[0];
+
+  if(title==="" || note===""){
+    alert("Fill all fields");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(){
+    const data = JSON.parse(localStorage.getItem("notes")) || [];
+    data.push({
+      title,
+      note,
+      image: file ? reader.result : null
+    });
+    localStorage.setItem("notes", JSON.stringify(data));
+
+    document.getElementById("title").value="";
+    document.getElementById("note").value="";
+    document.getElementById("file").value="";
+
+    alert("Saved successfully");
+  };
+
+  if(file) reader.readAsDataURL(file);
+  else reader.onload();
+}
+
+function goView(){
+  window.location.href = "view.html";
+}
+</script>
+
+</body>
+</html>

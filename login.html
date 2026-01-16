@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registeration Page</title>
+    <style>
+
+        body{
+            background: url(pexels-pixabay-326055.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            min-height: 100vh;
+        }
+
+        .container{
+            width: 500px;
+            height: 252px;
+            position: relative;
+            border-radius: 10px;
+            position: relative;
+            left: 35%;
+            top: 250px;
+            transition: 0.5s ease;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 10px 10px 20px 8px skyblue;
+        }
+        .container:hover{
+            transform: scale(1.01);
+        }
+        .container form{
+            padding: 25px;
+            margin-left: 1%;
+            display: flex;
+            flex-direction: column;
+            width: 400px;
+            gap: 20px;
+            position: relative;
+            left: 5px;
+            align-content: center;
+        }
+        input{
+            border: none solid white;
+            border-radius: 7px;
+            height: 25px;
+            box-shadow: 10px 10px 20px 5px skyblue;
+            outline: none;
+            border: 2px solid skyblue;
+        }
+        input[type="button"]{
+            border: none solid white;
+            border-radius: 7px;
+            width: 50%;
+            position: relative;
+            left: 30px;
+            cursor: pointer;
+            transition: 0.5s ease;
+        }
+        input[type="button"]:hover{
+            transform: scale(1.1);
+        }
+        .container h1{
+            position: relative;
+            text-align: center;
+            color: rgb(0, 64, 255);
+        }
+    </style>
+</head>
+<body>
+    
+        <div class="container">
+            <h1>Login Form</h1>
+            <form action="">
+                <input type="text" id="name" placeholder="Enter your  registered username..." >
+                <input type="password" id="pass" placeholder="Enter your registered password..." >
+                <input type="button" onclick="go()" value="Login...">
+            </form>
+        </div>
+    
+</body>
+<script>
+    const go= ()=>{
+        const uname = localStorage.getItem("username");
+        const upass = localStorage.getItem("password");
+
+        const enames = document.getElementById("name").value;
+        const epass = document.getElementById("pass").value;
+
+        if(enames === uname && epass === upass){
+            alert("Login Successfull !");
+            window.location.href = "notes.html";
+        }else{
+            alert("Enter the correct details...")
+        }
+
+
+    }
+    
+</script>
+</html>
